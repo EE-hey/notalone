@@ -1,8 +1,18 @@
 defmodule NotaloneWeb.CurrentRoom do
   use NotaloneWeb, :live_view
+  alias Notalone.{Repo,Room}
   def mount(params, _session, socket) do
-    NotaloneWeb.Endpoint.subscribe(params["room_name"])
-    {:ok, assign(socket, :values , %{room: params["room_name"], message: []})}
+
+    case Repo.get_by(Room, room_name: params["room_name"]) do
+      nil ->
+        NotaloneWeb.Endpoint.subscribe("General")
+        {:ok, assign(socket, :values , %{room: "General", message: []})}
+
+      _ ->
+        NotaloneWeb.Endpoint.subscribe(params["room_name"])
+        {:ok, assign(socket, :values , %{room: params["room_name"], message: []})}
+    end
+
   end
 
 
