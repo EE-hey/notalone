@@ -1,0 +1,10 @@
+<h1>Room name :  <%= @values[:room] %></h1>
+
+<%= for message <- @values[:message] do %>
+    <%= message %>
+    <br>
+<% end %>
+<form phx-submit="envoyer">
+    <input type="text" name="text">
+    <button>Send</button>
+</form>

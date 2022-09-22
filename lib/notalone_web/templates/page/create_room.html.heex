@@ -1,0 +1,19 @@
+<section class="phx-hero">
+    <h1>Create a room</h1>
+    <p>If you want to speak with your friends, you just have to create a room</p>
+    <form method="get" action="">
+        <input type="text" name="room_name" />
+        <button>Create !</button>
+    </form>
+</section>
+
+<section class="phx-hero">
+    <h2>Room list</h2>
+    <p>Select a room to join</p>
+    <%= for room <- @room_list do %>
+        <%= if room != "" do %>
+        <a href={"/room/" <> room} ><button><%= room %></button></a>
+        <% end %>
+    <% end %>
+
+</section>
