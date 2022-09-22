@@ -18,7 +18,6 @@ defmodule NotaloneWeb.PageController do
   end
 
   def current_room(conn, params) do
-    IO.inspect( params)
     render(conn, "current_room.html", room: params["room_name"])
   end
 end
