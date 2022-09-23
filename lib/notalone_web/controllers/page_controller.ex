@@ -7,7 +7,7 @@ defmodule NotaloneWeb.PageController do
     render(conn, "index.html")
   end
   def create_room(conn, params) do
-    if Map.has_key?(params, "room_name") do
+    if Map.has_key?(params, "room_name") && ! Repo.get_by(Room, room_name: params["room_name"]) do
        Repo.insert(%Room{room_name: params["room_name"] })
     end
     query = from r in Room, select: r.room_name
