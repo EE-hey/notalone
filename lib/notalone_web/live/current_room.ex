@@ -5,14 +5,22 @@ defmodule NotaloneWeb.CurrentRoom do
 
     case Repo.get_by(Room, room_name: params["room_name"]) do
       nil ->
-        NotaloneWeb.Endpoint.subscribe("General")
-        {:ok, assign(socket, :values , %{room: "General", message: []})}
+        {:ok, socket}
 
       _ ->
         NotaloneWeb.Endpoint.subscribe(params["room_name"])
         {:ok, assign(socket, :values , %{room: params["room_name"], message: []})}
     end
 
+  end
+
+  def handle_params(params, _uri, socket) do
+    case Repo.get_by(Room, room_name: params["room_name"]) do
+      nil ->
+        {:noreply, push_patch(socket, to:  "/" )}
+      _ ->
+        {:noreply, socket}
+    end
   end
   def handle_info(%{event: "msg", payload: %{values: %{message: message, room: room}}}, socket ) do
     {:noreply, assign(socket, :values, %{room: room, message: message})}
