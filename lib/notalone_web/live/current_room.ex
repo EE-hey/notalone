@@ -14,8 +14,6 @@ defmodule NotaloneWeb.CurrentRoom do
     end
 
   end
-
-
   def handle_info(%{event: "msg", payload: %{values: %{message: message, room: room}}}, socket ) do
     {:noreply, assign(socket, :values, %{room: room, message: message})}
   end
