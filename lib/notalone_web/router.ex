@@ -27,8 +27,7 @@ defmodule NotaloneWeb.Router do
   scope "/", NotaloneWeb do
     pipe_through [:browser, :require_authenticated_user]
     get "/create-room", PageController, :create_room
-    get "/", PageController, :index
-    get "/create-room", PageController, :create_room
+
 
   end
 
