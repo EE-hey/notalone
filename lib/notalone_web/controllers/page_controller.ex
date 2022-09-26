@@ -37,8 +37,6 @@ defmodule NotaloneWeb.PageController do
 
 
   def user_has_access_to_room(conn, _params) do
-    IO.inspect(conn.params["room_name"])
-    IO.inspect(conn.assigns[:current_user].id)
     room_id = Repo.get_by(Room, room_name: conn.params["room_name"]).id
     user_id = conn.assigns[:current_user].id
     IO.inspect(room_id)

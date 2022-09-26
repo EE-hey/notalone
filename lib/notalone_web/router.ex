@@ -25,15 +25,25 @@ defmodule NotaloneWeb.Router do
   end
 
   scope "/", NotaloneWeb do
-    pipe_through [:browser]
+    pipe_through [:browser, :require_authenticated_user]
     get "/create-room", PageController, :create_room
+    get "/", PageController, :index
+    get "/create-room", PageController, :create_room
+
+  end
+
+
+  scope "/room", NotaloneWeb do
+    pipe_through [:browser, :user_has_access_to_room, :require_authenticated_user]
+    live "/:room_name", CurrentRoom
+
+  end
+
+  scope "/", NotaloneWeb do
+    pipe_through [:browser]
     get "/join-new-room", PageController, :join_new_room
     get "/register-room", PageController, :register_room
 
-  end
-  scope "/room", NotaloneWeb do
-    pipe_through [:browser, :user_has_access_to_room]
-    live "/:room_name", CurrentRoom
   end
 
   # Other scopes may use custom stacks.
